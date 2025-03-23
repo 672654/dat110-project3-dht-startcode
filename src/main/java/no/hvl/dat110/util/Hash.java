@@ -1,12 +1,5 @@
 package no.hvl.dat110.util;
 
-/**
- * exercise/demo purpose in dat110
- * @author tdoy
- *
- */
-
-import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -19,6 +12,17 @@ public class Hash {
 		BigInteger hashint = null;
 		
 		// Task: Hash a given string using MD5 and return the result as a BigInteger.
+    try {
+      MessageDigest md = MessageDigest.getInstance("MD5");
+      md.update(entity.getBytes());
+      byte[] digest = md.digest();
+      String hex = toHex(digest);
+      hashint = new BigInteger(hex,16);
+      
+    } catch (NoSuchAlgorithmException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 		
 		// we use MD5 with 128 bits digest
 		
