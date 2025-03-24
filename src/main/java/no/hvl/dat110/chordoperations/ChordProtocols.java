@@ -166,19 +166,26 @@ public class ChordProtocols {
 			
 			// get the address size from the Hash class. This is the modulus and our address space (2^mbit = modulus)
 			BigInteger addressSize = Hash.addressSize();
+
 			// get the number of bits from the Hash class. Number of bits = size of the finger table
       int numberOfBits = Hash.bitSize();
 			
 			// iterate over the number of bits
-      for (int i = 0; i < numberOfBits; i++){
-        
-      }
-			
+      for (int i = 0; i < numberOfBits; i++){  
 			// compute: k = succ(n + 2^(i)) mod 2^mbit
+        BigInteger twoPowI = BigInteger.valueOf(2).pow(i);
+        BigInteger nodeId = chordnode.getNodeID();
+        BigInteger nPlusTwoPowI = nodeId.add(twoPowI);
+        BigInteger k = nPlusTwoPowI.mod(addressSize);
 			
-			// then: use chordnode to find the successor of k. (i.e., succnode = chordnode.findSuccessor(k))
+			  // then: use chordnode to find the successor of k. (i.e., succnode = chordnode.findSuccessor(k))
+        NodeInterface succnode = chordnode.findSuccessor(k);
 			
-			// check that succnode is not null, then add it to the finger table
+			  // check that succnode is not null, then add it to the finger table
+        if(succnode != null){
+          fingerTable.add(succnode);
+        }
+      }
 
 		} catch (RemoteException e) {
 			//
