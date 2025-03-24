@@ -87,22 +87,30 @@ public class FileManager {
     	int counter = 0;
 	
     	// Task1: Given a filename, make replicas and distribute them to all active peers such that: pred < replica <= peer
-    	
     	// Task2: assign a replica as the primary for this file. Hint, see the slide (project 3) on Canvas
     	
     	// create replicas of the filename
+      createReplicaFiles();
     	
 		// iterate over the replicas
-    	
-    	// for each replica, find its successor (peer/node) by performing findSuccessor(replica)
-    	
-    	// call the addKey on the successor and add the replica
-		
-		// implement a logic to decide if this successor should be assigned as the primary for the file
-    	
-    	// call the saveFileContent() on the successor and set isPrimary=true if logic above is true otherwise set isPrimary=false
-    	
-    	// increment counter
+    for(BigInteger replica : replicafiles){
+
+      // for each replica, find its successor (peer/node) by performing findSuccessor(replica)
+      NodeInterface successorNode = this.chordnode.findSuccessor(replica);
+
+      // call the addKey on the successor and add the replica
+      successorNode.addKey(replica);
+
+      // implement a logic to decide if this successor should be assigned as the primary for the file
+      // call the saveFileContent() on the successor and set isPrimary=true if logic above is true otherwise set isPrimary=false
+      if (counter == index){
+        successorNode.saveFileContent(filename, successorNode.getNodeID(), bytesOfFile, true);
+        } else{
+        successorNode.saveFileContent(filename, successorNode.getNodeID(), bytesOfFile, false);
+        }
+      // increment counter
+      counter++;
+      }
 		return counter;
     }
 	
@@ -120,14 +128,21 @@ public class FileManager {
 		// Task: Given a filename, find all the peers that hold a copy of this file
 		
 		// generate the N replicas from the filename by calling createReplicaFiles()
+    createReplicaFiles();
 		
 		// iterate over the replicas of the file
-		
-		// for each replica, do findSuccessor(replica) that returns successor s.
-		
-		// get the metadata (Message) of the replica from the successor (i.e., active peer) of the file
-		
-		// save the metadata in the set activeNodesforFile.
+    for(BigInteger replica : replicafiles){
+      // for each replica, do findSuccessor(replica) that returns successor s.
+      NodeInterface s = this.chordnode.findSuccessor(replica);
+
+      // get the metadata (Message) of the replica from the successor (i.e., active peer) of the file
+      Message metadata = s.getFilesMetadata(s.getNodeID());
+
+      // save the metadata in the set activeNodesforFile.
+      activeNodesforFile.add(metadata);
+      
+      
+    }
 		
 		return activeNodesforFile;
 	}

@@ -41,6 +41,7 @@ public class ChordLookup {
 		BigInteger nodeId = this.node.getNodeID().add(BigInteger.ONE);
     BigInteger succId = successorNode.getNodeID();  
 
+    //(k,n,succ(n))
     if (Util.checkInterval(key, nodeId, succId)){
       // if logic returns true, then return the successor
       return successorNode;
