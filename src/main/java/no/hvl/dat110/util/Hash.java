@@ -56,11 +56,11 @@ public class Hash {
 	
 	public static int bitSize() {
 		
-		int digestlen = 128 / 8;
+		int digestlen = 128;
 		
 		// find the digest length
 		
-		return digestlen*8;
+		return digestlen;
 	}
 	
 	public static String toHex(byte[] digest) {

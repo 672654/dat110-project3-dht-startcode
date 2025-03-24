@@ -30,7 +30,8 @@ public class ChordLookup {
 	}
 	
 	public NodeInterface findSuccessor(BigInteger key) throws RemoteException {
-		// ask this node to find the successor of key
+		
+    // ask this node to find the successor of key
 		
 		// get the successor of the node
 		

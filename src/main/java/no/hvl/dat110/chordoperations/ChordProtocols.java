@@ -6,6 +6,7 @@ package no.hvl.dat110.chordoperations;
 import java.math.BigInteger;
 import java.rmi.RemoteException;
 import java.rmi.registry.Registry;
+import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 import no.hvl.dat110.middleware.Message;
 import no.hvl.dat110.middleware.Node;
 import no.hvl.dat110.rpc.interfaces.NodeInterface;
+import no.hvl.dat110.util.Hash;
 import no.hvl.dat110.util.Util;
 
 /**
@@ -157,14 +159,20 @@ public class ChordProtocols {
 			logger.info("Fixing the FingerTable for the Node: "+ chordnode.getNodeName());
 	
 			// get the finger table from the chordnode (list object)
+      List<NodeInterface> fingerTable = chordnode.getFingerTable();
 			
 			// ensure to clear the current finger table
+      fingerTable.clear();
 			
 			// get the address size from the Hash class. This is the modulus and our address space (2^mbit = modulus)
-			
+			BigInteger addressSize = Hash.addressSize();
 			// get the number of bits from the Hash class. Number of bits = size of the finger table
+      int numberOfBits = Hash.bitSize();
 			
-			// iterate over the number of bits			
+			// iterate over the number of bits
+      for (int i = 0; i < numberOfBits; i++){
+        
+      }
 			
 			// compute: k = succ(n + 2^(i)) mod 2^mbit
 			

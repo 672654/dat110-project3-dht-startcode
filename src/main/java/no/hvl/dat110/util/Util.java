@@ -46,11 +46,11 @@ public class Util {
 		// Task: given an identifier, id: check whether pred < id <= node
 		if (lower.compareTo(upper) <= 0) {
       return lower.compareTo(id) <= 0 && id.compareTo(upper) <= 0;
-  }
+    }
   // Hvis lower er større enn upper, betyr det at intervallet går rundt kanten av ringen: (lower <= id eller id <= upper)
-  else {
+    else {
       return lower.compareTo(id) <= 0 || id.compareTo(upper) <= 0;
-  }
+    }
 		//return false;
 
 	}
