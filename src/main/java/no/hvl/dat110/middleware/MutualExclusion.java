@@ -170,7 +170,7 @@ public class MutualExclusion {
 				// check the clock of the sending process (note that the correct clock is in the received message)
 				int sendersClock = message.getClock();
 				// own clock of the receiver (note that the correct clock is in the node's message)
-				int ownClock = clock.getClock();
+				int ownClock = node.getMessage().getClock();
 
 				// compare clocks, the lowest wins
         // if clocks are the same, compare nodeIDs, the lowest wins
