@@ -59,7 +59,7 @@ public class FileManager {
 	public void createReplicaFiles() {
 	 	
 		// set a loop where size = numReplicas
-		for(int i = 0; i < Util.numReplicas; i++){
+		for(int i = 0; i < numReplicas; i++){
 
       // replicate by adding the index to filename
       String replicaName = this.filename + i;
@@ -104,9 +104,9 @@ public class FileManager {
       // implement a logic to decide if this successor should be assigned as the primary for the file
       // call the saveFileContent() on the successor and set isPrimary=true if logic above is true otherwise set isPrimary=false
       if (counter == index){
-        successorNode.saveFileContent(filename, successorNode.getNodeID(), bytesOfFile, true);
+        successorNode.saveFileContent(filename, replica, bytesOfFile, true);
         } else{
-        successorNode.saveFileContent(filename, successorNode.getNodeID(), bytesOfFile, false);
+        successorNode.saveFileContent(filename, replica, bytesOfFile, false);
         }
       // increment counter
       counter++;
@@ -136,7 +136,7 @@ public class FileManager {
       NodeInterface s = this.chordnode.findSuccessor(replica);
 
       // get the metadata (Message) of the replica from the successor (i.e., active peer) of the file
-      Message metadata = s.getFilesMetadata(s.getNodeID());
+      Message metadata = s.getFilesMetadata(replica);
 
       // save the metadata in the set activeNodesforFile.
       activeNodesforFile.add(metadata);

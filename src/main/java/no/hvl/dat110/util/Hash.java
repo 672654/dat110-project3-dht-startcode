@@ -1,6 +1,7 @@
 package no.hvl.dat110.util;
 
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -14,10 +15,10 @@ public class Hash {
 		// Task: Hash a given string using MD5 and return the result as a BigInteger.
     try {
       MessageDigest md = MessageDigest.getInstance("MD5");
-      md.update(entity.getBytes());
+      md.update(entity.getBytes(StandardCharsets.UTF_8));
       byte[] digest = md.digest();
-      String hex = toHex(digest);
-      hashint = new BigInteger(hex,16);
+      //String hex = toHex(digest);
+      hashint = new BigInteger(1,digest);
       
     } catch (NoSuchAlgorithmException e) {
       // TODO Auto-generated catch block
@@ -39,19 +40,18 @@ public class Hash {
 	
 	public static BigInteger addressSize() {
 		
-    BigInteger adressSize;
+    //BigInteger adressSize;
 		// Task: compute the address size of MD5
 		
 		// compute the number of bits = bitSize()
 		int numberOfBits = bitSize();
 
 		// compute the address size = 2 ^ number of bits
-    adressSize = BigInteger.valueOf(2).pow(numberOfBits);
+    return new BigInteger("2").pow(numberOfBits);
 
 		
 		// return the address size
 		
-		return adressSize;
 	}
 	
 	public static int bitSize() {

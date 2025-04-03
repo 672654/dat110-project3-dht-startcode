@@ -78,11 +78,11 @@ public class MutualExclusion {
       this.node.broadcastUpdatetoPeers(updates);
       // clear the mutexqueue
       mutexqueue.clear();
-      // return permission
-      return true;
-    } else {
-      return false;
-    }	
+     
+    }
+       // return permission
+       return allReplicasReplied;
+    
 	}
 	
 	// multicast message to other processes including self
@@ -124,7 +124,7 @@ public class MutualExclusion {
         caseid = 1;
       }
 			// caseid=2: Receiver wants to access resource but is yet to - compare own message clock to received message's clock
-      else if (WANTS_TO_ENTER_CS){
+      else if (!CS_BUSY){
         caseid = 2;
       }
 		
@@ -208,17 +208,25 @@ public class MutualExclusion {
 		
 		// iterate over the activenodes
     for(Message m : activenodes){
-      // obtain a stub for each node from the registry
-      NodeInterface stub = Util.getProcessStub(m.getNodeName(), m.getPort());
-      // call releaseLocks()	
+
       try {
-        stub.releaseLocks();
-        
+        if(m.getNodeID().equals(this.node.getNodeID())){
+          releaseLocks();
+        } else {
+          NodeInterface stub = Util.getProcessStub(m.getNodeName(), m.getPort());
+          stub.releaseLocks();
+        }
+
       } catch (RemoteException e) {
+        // TODO Auto-generated catch block
         e.printStackTrace();
       }
+      // obtain a stub for each node from the registry
+      
+      // call releaseLocks()	
+      
     }
-    releaseLocks();
+    
 	}
 	
 	private boolean areAllMessagesReturned(int numvoters) throws RemoteException {

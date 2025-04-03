@@ -183,7 +183,7 @@ public class ChordProtocols {
 			
 			  // check that succnode is not null, then add it to the finger table
         if(succnode != null){
-          fingerTable.add(succnode);
+          fingerTable.add(i,succnode);
         }
       }
 
